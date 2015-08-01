@@ -26,11 +26,16 @@ ENV JENKINS_HOME /root/.jenkins
 RUN apt-get install -y unzip libicu48 libfontconfig1 libjpeg8 libpng12-0
 
 WORKDIR /opt/phantomjs
-RUN wget https://github.com/spfaffly/phantomjs-linux-armv6l/archive/master.zip
-RUN unzip master.zip && tar -xf phantomjs-linux-armv6l-master/phantomjs-2.0.1-development-linux-armv6l.tar.gz  
-RUN mv phantomjs-2.0.1-development-linux-armv6l/bin/* /opt/phantomjs
-RUN chmod +x /opt/phantomjs
+RUN wget https://github.com/piksel/phantomjs-raspberrypi/archive/master.zip 
+RUN unzip master.zip
+RUN mv phantomjs-raspberrypi-master/bin/phantomjs /opt/phantomjs
+RUN rm -rf phantomjs-raspberrypi-master
+RUN chmod +x /opt/phantomjs/phantomjs
 ENV PATH /opt/phantomjs/:$PATH
+ENV PHANTOMJS_BIN=/opt/phantomjs/phantomjs
+
+#git
+RUN apt-get install -y git
 
 CMD java -jar /opt/jenkins/jenkins.war
 
