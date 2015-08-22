@@ -45,13 +45,9 @@ RUN wget https://bootstrap.pypa.io/get-pip.py
 RUN python get-pip.py
 RUN pip install jsonschema
 
+RUN pip install docker-compose
 
-RUN git clone https://github.com/docker/compose
-RUN cd compose && git reset --hard 1.4.0
-RUN apt-get install -y python-setuptools
-RUN python compose/setup.py develop
-
-USER jenkins
+RUN usermod -a -G root jenkins
 WORKDIR /var/jenkins_home
+#USER jenkins
 CMD java -jar /var/jenkins_work/jenkins.war
-
