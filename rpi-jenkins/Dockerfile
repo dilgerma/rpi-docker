@@ -40,6 +40,11 @@ ENV PHANTOMJS_BIN=/usr/local/bin/phantomjs
 USER root
 RUN apt-get install -y build-essential
 
+#install docker compose
+RUN wget https://github.com/hypriot/compose/releases/download/1.2.0-raspbian/docker-compose-`uname -s`-`uname -m` 
+RUN mv docker-compose-Linux-armv7l /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+
 USER jenkins
 WORKDIR /var/jenkins_home
 CMD java -jar /var/jenkins_work/jenkins.war
