@@ -40,10 +40,16 @@ ENV PHANTOMJS_BIN=/usr/local/bin/phantomjs
 USER root
 RUN apt-get install -y build-essential
 
-#install docker compose
-RUN wget https://github.com/hypriot/compose/releases/download/1.2.0-raspbian/docker-compose-`uname -s`-`uname -m` 
-RUN mv docker-compose-Linux-armv7l /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
+#install python - docker-compose has some dependencies
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python get-pip.py
+RUN pip install jsonschema
+
+
+RUN git clone https://github.com/docker/compose
+RUN cd compose && git reset --hard 1.4.0
+RUN apt-get install -y python-setuptools
+RUN python compose/setup.py develop
 
 USER jenkins
 WORKDIR /var/jenkins_home
