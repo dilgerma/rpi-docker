@@ -1,4 +1,4 @@
-FROM rpidockers/java
+FROM rpidockers/java:1.8.0_60
 MAINTAINER Martin Dilger <martin@effectivetrainings.de>
 
 RUN mkdir /var/jenkins_home
@@ -46,6 +46,9 @@ RUN python get-pip.py
 RUN pip install jsonschema
 
 RUN pip install docker-compose
+
+#shipwright
+RUN pip install shipwright
 
 RUN usermod -a -G root jenkins
 WORKDIR /var/jenkins_home
