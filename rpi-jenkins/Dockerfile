@@ -1,4 +1,4 @@
-FROM rpidockers/java:1.8.0_60
+FROM dilgerm/rpi-app-base:jessie
 MAINTAINER Martin Dilger <martin@effectivetrainings.de>
 
 RUN mkdir /var/jenkins_home
@@ -8,7 +8,7 @@ RUN groupadd -r jenkins && useradd -d $JENKINS_HOME jenkins -g jenkins
 RUN chown -R jenkins /var/jenkins_home
 
 RUN apt-get update
-RUN apt-get install -y wget nodejs npm git unzip libicu48 libfontconfig1 libjpeg8 libpng12-0
+RUN apt-get install -y wget nodejs npm git unzip
 
 RUN mkdir /var/jenkins_work
 RUN chown -R jenkins /var/jenkins_work
@@ -53,4 +53,5 @@ RUN pip install shipwright
 RUN usermod -a -G root jenkins
 WORKDIR /var/jenkins_home
 #USER jenkins
+ENV JENKINS_HOME=/var/jenkins_home
 CMD java -jar /var/jenkins_work/jenkins.war
